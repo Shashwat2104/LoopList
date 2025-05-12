@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -16,6 +15,7 @@ import { Menu } from "lucide-react";
 
 export default function MainNav() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navigationLinks = [
@@ -30,6 +30,11 @@ export default function MainNav() {
         .join("")
         .toUpperCase()
     : "U";
+
+  const handleLogout = () => {
+    logout();
+    navigate("/home"); // Navigate to home page after logout
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
@@ -99,13 +104,17 @@ export default function MainNav() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <div className="px-2 py-1.5 text-sm font-medium">{user.name}</div>
+                <div className="px-2 py-1.5 text-sm font-medium">
+                  {user.name}
+                </div>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                   <Link to="/dashboard">My Dashboard</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout}>
+                  Logout
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
