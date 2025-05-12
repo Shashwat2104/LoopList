@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Loop } from "@/types";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,8 @@ import { useLoops } from "@/context/LoopContext";
 import { useAuth } from "@/context/AuthContext";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/components/ui/sonner";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 // Category icon mapping
 const CATEGORY_ICONS: Record<string, JSX.Element> = {
@@ -109,13 +111,26 @@ const ACHIEVEMENT_BADGES: Record<
 interface LoopCardProps {
   loop: Loop;
   showActions?: boolean;
+  delay?: number;
 }
 
-export default function LoopCard({ loop, showActions = true }: LoopCardProps) {
+export default function LoopCard({
+  loop,
+  showActions = true,
+  delay = 0,
+}: LoopCardProps) {
   const { cheerLoop, cloneLoop, hasUserCheeredLoop } = useLoops();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [cheerAnimating, setCheerAnimating] = useState(false);
+  const [cloneAnimating, setCloneAnimating] = useState(false);
+
+  // Refs for animations
+  const cardRef = useRef<HTMLDivElement>(null);
+  const streakBadgeRef = useRef<HTMLDivElement>(null);
+  const cheerButtonRef = useRef<HTMLButtonElement>(null);
+  const cloneButtonRef = useRef<HTMLButtonElement>(null);
+  const flameRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Check if the user has already cheered this loop
   const hasLiked = user ? hasUserCheeredLoop(loop.id) : false;
@@ -133,6 +148,71 @@ export default function LoopCard({ loop, showActions = true }: LoopCardProps) {
 
   const achievementBadge = getAchievementBadge();
 
+  // GSAP animations
+  useGSAP(() => {
+    if (!cardRef.current) return;
+
+    // Initial animation for the card
+    gsap.fromTo(
+      cardRef.current,
+      {
+        y: 30,
+        opacity: 0,
+        scale: 0.95,
+      },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 0.6,
+        ease: "back.out(1.7)",
+        delay: delay * 0.1,
+      }
+    );
+
+    // Streak badge animation
+    if (
+      streakBadgeRef.current &&
+      loop.currentStreak > 0 &&
+      loop.status === "active"
+    ) {
+      gsap.fromTo(
+        streakBadgeRef.current,
+        { scale: 0, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 0.8,
+          ease: "elastic.out(1, 0.5)",
+          delay: delay * 0.1 + 0.3,
+        }
+      );
+
+      // Create pulsing effect for active streaks
+      gsap.to(streakBadgeRef.current, {
+        boxShadow: "0 0 8px rgba(255, 160, 0, 0.7)",
+        repeat: -1,
+        yoyo: true,
+        duration: 1.5,
+        ease: "sine.inOut",
+      });
+    }
+
+    // Animate flames for active streaks
+    flameRefs.current.forEach((flame, index) => {
+      if (flame) {
+        gsap.to(flame, {
+          y: "-5px",
+          repeat: -1,
+          yoyo: true,
+          duration: 0.8 + index * 0.2,
+          ease: "sine.inOut",
+          delay: index * 0.1,
+        });
+      }
+    });
+  }, [loop.id, delay]);
+
   const handleCheer = async (e: React.MouseEvent) => {
     e.stopPropagation();
 
@@ -143,6 +223,58 @@ export default function LoopCard({ loop, showActions = true }: LoopCardProps) {
 
     try {
       setCheerAnimating(true);
+
+      // Create heart burst animation
+      if (cheerButtonRef.current) {
+        const button = cheerButtonRef.current;
+        const rect = button.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+
+        // Create heart particles
+        for (let i = 0; i < 10; i++) {
+          const particle = document.createElement("div");
+          particle.innerHTML = "❤️";
+          particle.style.position = "fixed";
+          particle.style.left = `${x}px`;
+          particle.style.top = `${y}px`;
+          particle.style.zIndex = "1000";
+          particle.style.pointerEvents = "none";
+          particle.style.fontSize = "16px";
+          document.body.appendChild(particle);
+
+          gsap.to(particle, {
+            x: (Math.random() - 0.5) * 100,
+            y: Math.random() * -100,
+            opacity: 0,
+            scale: Math.random() * 0.5 + 0.5,
+            duration: 1 + Math.random(),
+            onComplete: () => {
+              if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+              }
+            },
+          });
+        }
+
+        // Animate the heart icon itself
+        const heartIcon = button.querySelector("svg");
+        if (heartIcon) {
+          gsap.fromTo(
+            heartIcon,
+            { scale: 1 },
+            {
+              scale: 1.5,
+              duration: 0.3,
+              ease: "back.out(3)",
+              onComplete: () => {
+                gsap.to(heartIcon, { scale: 1, duration: 0.2 });
+              },
+            }
+          );
+        }
+      }
+
       await cheerLoop(loop.id);
       setTimeout(() => setCheerAnimating(false), 1000);
     } catch (error) {
@@ -160,10 +292,54 @@ export default function LoopCard({ loop, showActions = true }: LoopCardProps) {
     }
 
     try {
+      setCloneAnimating(true);
+
+      // Clone animation
+      if (cloneButtonRef.current && cardRef.current) {
+        const timeline = gsap.timeline();
+
+        // Create a clone of the card that we'll animate
+        const cardClone = cardRef.current.cloneNode(true) as HTMLDivElement;
+        const rect = cardRef.current.getBoundingClientRect();
+
+        cardClone.style.position = "fixed";
+        cardClone.style.top = `${rect.top}px`;
+        cardClone.style.left = `${rect.left}px`;
+        cardClone.style.width = `${rect.width}px`;
+        cardClone.style.height = `${rect.height}px`;
+        cardClone.style.zIndex = "1000";
+        cardClone.style.pointerEvents = "none";
+        document.body.appendChild(cardClone);
+
+        // Target position (dashboard button in header)
+        const dashboardLink = document.querySelector('a[href="/dashboard"]');
+        const targetRect = dashboardLink
+          ? dashboardLink.getBoundingClientRect()
+          : { top: 0, left: window.innerWidth / 2 };
+
+        // Animate the clone to fly to dashboard
+        timeline.to(cardClone, {
+          top: targetRect.top,
+          left: targetRect.left,
+          scale: 0.2,
+          opacity: 0,
+          rotation: 5,
+          duration: 0.8,
+          ease: "power1.inOut",
+          onComplete: () => {
+            if (cardClone.parentNode) {
+              cardClone.parentNode.removeChild(cardClone);
+            }
+          },
+        });
+      }
+
       await cloneLoop(loop.id);
       toast.success("Loop cloned to your dashboard!");
+      setCloneAnimating(false);
     } catch (error) {
       toast.error("Failed to clone loop");
+      setCloneAnimating(false);
     }
   };
 
@@ -192,11 +368,13 @@ export default function LoopCard({ loop, showActions = true }: LoopCardProps) {
         {Array(flameCount)
           .fill(0)
           .map((_, index) => (
-            <Flame
+            <div
               key={index}
-              size={16}
-              className={`${flameIntensity} ${index > 0 ? "-ml-1" : ""}`}
-            />
+              ref={(el) => (flameRefs.current[index] = el)}
+              className={`inline-block ${index > 0 ? "-ml-1" : ""}`}
+            >
+              <Flame size={16} className={`${flameIntensity}`} />
+            </div>
           ))}
       </div>
     );
@@ -204,7 +382,8 @@ export default function LoopCard({ loop, showActions = true }: LoopCardProps) {
 
   return (
     <div
-      className="loop-card cursor-pointer hover:shadow-md transition-shadow"
+      ref={cardRef}
+      className="loop-card cursor-pointer hover:shadow-md transition-shadow bg-white border rounded-lg p-4"
       onClick={handleClick}
     >
       <div className="flex items-start justify-between">
@@ -220,7 +399,10 @@ export default function LoopCard({ loop, showActions = true }: LoopCardProps) {
           <h3 className="font-semibold text-lg">{loop.title}</h3>
         </div>
         {loop.status === "active" && (
-          <div className="streak-badge flex items-center space-x-1 animate-bounce-subtle bg-amber-50 px-2 py-1 rounded-full">
+          <div
+            ref={streakBadgeRef}
+            className="streak-badge flex items-center space-x-1 bg-amber-50 px-2 py-1 rounded-full"
+          >
             {renderStreakFlames()}
             <span className="font-medium text-amber-700">
               {loop.currentStreak} days
@@ -250,65 +432,48 @@ export default function LoopCard({ loop, showActions = true }: LoopCardProps) {
         </div>
       )}
 
-      <div className="mt-3 flex items-center text-sm text-muted-foreground gap-4">
-        <div className="flex items-center gap-1">
-          <Calendar size={14} />
-          <span>{loop.frequency}</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <BarChart3 size={14} />
-          <span>{Math.round(loop.completionRate * 100)}% completed</span>
-        </div>
-      </div>
+      <p className="text-sm text-muted-foreground my-3 line-clamp-2">
+        {loop.description}
+      </p>
 
-      {/* Streak visualization for active loops */}
-      {loop.status === "active" && loop.currentStreak > 0 && (
-        <div className="mt-3 h-2 bg-gray-100 rounded-full overflow-hidden">
-          <div
-            className={`h-full rounded-full ${
-              loop.currentStreak >= 30
-                ? "bg-gradient-to-r from-red-500 to-orange-500"
-                : loop.currentStreak >= 14
-                ? "bg-gradient-to-r from-orange-500 to-amber-500"
-                : "bg-gradient-to-r from-amber-500 to-yellow-500"
-            }`}
-            style={{
-              width: `${Math.min(100, (loop.currentStreak / 100) * 100)}%`,
-            }}
-          />
+      <div className="mt-3 flex items-center justify-between">
+        <div className="flex items-center text-sm text-muted-foreground">
+          <User size={14} className="mr-1" />
+          <span>{loop.author?.name || "Anonymous"}</span>
         </div>
-      )}
 
-      {showActions && (
-        <div className="mt-4 flex justify-between items-center pt-3 border-t">
-          <div className="flex items-center gap-1 text-xs text-muted-foreground">
-            <User size={14} />
-            <span>by {loop.userId === user?.id ? "You" : "User"}</span>
-          </div>
-
-          <div className="flex gap-2">
+        {showActions && (
+          <div className="flex space-x-2">
             <Button
+              ref={cheerButtonRef}
               variant={hasLiked ? "secondary" : "ghost"}
               size="sm"
+              className={`px-3 ${hasLiked ? "bg-red-50 text-red-600" : ""}`}
               onClick={handleCheer}
-              className={cheerAnimating ? "animate-celebration" : ""}
+              disabled={cheerAnimating}
             >
               <Heart
                 size={16}
                 className={`mr-1 ${
-                  hasLiked ? "fill-flame-500 text-flame-500" : "text-flame-500"
+                  hasLiked ? "fill-red-500 text-red-500" : ""
                 }`}
               />
               <span>{loop.cheers}</span>
             </Button>
-
-            <Button variant="ghost" size="sm" onClick={handleClone}>
-              <Copy size={16} className="mr-1 text-purple-500" />
+            <Button
+              ref={cloneButtonRef}
+              variant="ghost"
+              size="sm"
+              className="px-3"
+              onClick={handleClone}
+              disabled={cloneAnimating}
+            >
+              <Copy size={16} className="mr-1" />
               <span>{loop.clones}</span>
             </Button>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

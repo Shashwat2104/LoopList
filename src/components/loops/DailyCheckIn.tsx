@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Loop } from "@/types";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,6 +22,8 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 interface DailyCheckInProps {
   loop: Loop;
@@ -44,6 +46,98 @@ export default function DailyCheckIn({ loop }: DailyCheckInProps) {
   const [showConfetti, setShowConfetti] = useState(false);
   const [motivationalQuote, setMotivationalQuote] = useState("");
 
+  // Refs for animations
+  const containerRef = useRef<HTMLDivElement>(null);
+  const completedButtonRef = useRef<HTMLButtonElement>(null);
+  const missedButtonRef = useRef<HTMLButtonElement>(null);
+  const streakRef = useRef<HTMLDivElement>(null);
+  const quoteRef = useRef<HTMLDivElement>(null);
+  const milestoneRef = useRef<HTMLDivElement>(null);
+
+  // GSAP animations
+  useGSAP(() => {
+    if (!containerRef.current) return;
+
+    // Initial animation when component mounts
+    const elements = containerRef.current.querySelectorAll(".animate-in");
+    gsap.fromTo(
+      elements,
+      { y: 20, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.7,
+        stagger: 0.1,
+        ease: "back.out(1.4)",
+      }
+    );
+
+    // Animate streak milestone if present
+    if (milestoneRef.current) {
+      gsap.fromTo(
+        milestoneRef.current,
+        { scale: 0.9, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 0.8,
+          ease: "elastic.out(1, 0.5)",
+          delay: 0.5,
+        }
+      );
+
+      // Create pulsing effect for milestone
+      gsap.to(milestoneRef.current, {
+        boxShadow: "0 0 15px rgba(255, 197, 23, 0.4)",
+        repeat: -1,
+        yoyo: true,
+        duration: 1.5,
+        ease: "sine.inOut",
+      });
+    }
+
+    // Animate buttons with hover effects
+    if (completedButtonRef.current) {
+      completedButtonRef.current.addEventListener("mouseenter", () => {
+        gsap.to(completedButtonRef.current, {
+          scale: 1.05,
+          y: -2,
+          boxShadow: "0 10px 15px -3px rgba(255, 107, 0, 0.2)",
+          duration: 0.2,
+        });
+      });
+
+      completedButtonRef.current.addEventListener("mouseleave", () => {
+        gsap.to(completedButtonRef.current, {
+          scale: 1,
+          y: 0,
+          boxShadow: "0 4px 6px -1px rgba(255, 107, 0, 0.1)",
+          duration: 0.2,
+        });
+      });
+    }
+
+    // Animate the motivational quote with typewriter effect
+    if (quoteRef.current) {
+      const text = quoteRef.current.textContent || "";
+      quoteRef.current.textContent = "";
+
+      const chars = text.split("");
+      chars.forEach((char, index) => {
+        const charSpan = document.createElement("span");
+        charSpan.textContent = char;
+        charSpan.style.opacity = "0";
+        quoteRef.current?.appendChild(charSpan);
+
+        gsap.to(charSpan, {
+          opacity: 1,
+          duration: 0.05,
+          delay: 0.8 + index * 0.03,
+        });
+      });
+    }
+  }, [loop.id]);
+
   // Get all check-ins for this loop
   const checkIns = getCheckInsForLoop(loop.id);
 
@@ -62,10 +156,41 @@ export default function DailyCheckIn({ loop }: DailyCheckInProps) {
     setIsSubmitting(true);
 
     try {
+      // Animation for check-in button press
+      if (completed && completedButtonRef.current) {
+        gsap
+          .timeline()
+          .to(completedButtonRef.current, {
+            scale: 0.95,
+            duration: 0.1,
+          })
+          .to(completedButtonRef.current, {
+            scale: 1.1,
+            duration: 0.3,
+            ease: "back.out(1.7)",
+          })
+          .to(completedButtonRef.current, {
+            scale: 1,
+            duration: 0.2,
+          });
+      } else if (!completed && missedButtonRef.current) {
+        gsap
+          .timeline()
+          .to(missedButtonRef.current, {
+            scale: 0.95,
+            duration: 0.1,
+          })
+          .to(missedButtonRef.current, {
+            scale: 1,
+            duration: 0.2,
+          });
+      }
+
       await checkInLoop(loop.id, date, completed);
       setCheckInPopoverOpen(false);
 
       if (completed) {
+        createStreakConfetti();
         setShowConfetti(true);
         setTimeout(() => setShowConfetti(false), 3000);
         toast.success("Great job, streak continued!");
@@ -77,6 +202,61 @@ export default function DailyCheckIn({ loop }: DailyCheckInProps) {
       console.error(error);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  // Create confetti effect using GSAP for successful check-in
+  const createStreakConfetti = () => {
+    if (!containerRef.current) return;
+
+    const container = containerRef.current;
+    const containerRect = container.getBoundingClientRect();
+
+    // Create confetti particles
+    for (let i = 0; i < 50; i++) {
+      const particle = document.createElement("div");
+      particle.className = "streak-confetti";
+
+      // Randomize particle properties
+      const size = Math.random() * 10 + 5;
+      const color = [
+        "#FF5757", // red
+        "#FFD557", // yellow
+        "#57FF8D", // green
+        "#57ADFF", // blue
+        "#CB57FF", // purple
+        "#FF914D", // orange
+      ][Math.floor(Math.random() * 6)];
+
+      // Style the particle
+      particle.style.position = "absolute";
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.backgroundColor = color;
+      particle.style.borderRadius = `${Math.random() > 0.5 ? "50%" : "0"}`;
+      particle.style.zIndex = "100";
+      particle.style.pointerEvents = "none";
+
+      // Position at the center
+      particle.style.left = `${containerRect.width / 2}px`;
+      particle.style.top = `${containerRect.height / 2}px`;
+
+      container.appendChild(particle);
+
+      // Animate the particle
+      gsap.to(particle, {
+        x: (Math.random() - 0.5) * containerRect.width,
+        y: (Math.random() - 0.5) * containerRect.height,
+        opacity: 0,
+        rotation: Math.random() * 360,
+        duration: 1 + Math.random() * 2,
+        ease: "power2.out",
+        onComplete: () => {
+          if (particle.parentNode) {
+            particle.parentNode.removeChild(particle);
+          }
+        },
+      });
     }
   };
 
@@ -142,7 +322,7 @@ export default function DailyCheckIn({ loop }: DailyCheckInProps) {
   };
 
   return (
-    <div className="flex flex-col items-center relative">
+    <div ref={containerRef} className="flex flex-col items-center relative">
       {showConfetti && (
         <div className="absolute inset-0 pointer-events-none overflow-hidden z-10">
           <img
@@ -150,58 +330,33 @@ export default function DailyCheckIn({ loop }: DailyCheckInProps) {
             alt="Celebration"
             className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/4 w-full opacity-75 animate-float"
           />
-          {Array.from({ length: 20 }).map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute"
-              initial={{
-                x: Math.random() * 100 - 50 + "%",
-                y: -20,
-                opacity: 1,
-                scale: Math.random() * 0.5 + 0.5,
-              }}
-              animate={{
-                y: ["0%", "100%"],
-                opacity: [1, 0],
-                rotate: Math.random() * 360,
-              }}
-              transition={{
-                duration: Math.random() * 2 + 1,
-                ease: "easeOut",
-              }}
-              style={{
-                left: `${Math.random() * 100}%`,
-                backgroundColor: [
-                  "#FF5757",
-                  "#FFD557",
-                  "#57FF8D",
-                  "#57ADFF",
-                  "#CB57FF",
-                ][Math.floor(Math.random() * 5)],
-                width: "10px",
-                height: "10px",
-                borderRadius: "50%",
-              }}
-            />
-          ))}
         </div>
       )}
 
-      <h3 className="text-xl font-medium mb-2">Check in for your loop</h3>
+      <h3 className="text-xl font-medium mb-2 animate-in">
+        Check in for your loop
+      </h3>
+
       {streakMilestone && (
-        <div className="flex items-center gap-2 mb-3 bg-amber-50 text-amber-700 px-3 py-1.5 rounded-full">
+        <div
+          ref={milestoneRef}
+          className="flex items-center gap-2 mb-3 bg-amber-50 text-amber-700 px-3 py-1.5 rounded-full animate-in"
+        >
           <Sparkles className="h-4 w-4" />
           <span className="text-sm font-medium">{streakMilestone.text}</span>
         </div>
       )}
 
-      <div className="text-sm text-center text-muted-foreground mb-4">
+      <div
+        ref={quoteRef}
+        className="text-sm text-center text-muted-foreground mb-4 animate-in"
+      >
         {motivationalQuote}
       </div>
 
       <Popover open={checkInPopoverOpen} onOpenChange={setCheckInPopoverOpen}>
         <PopoverTrigger asChild>
-          <Button variant="outline" className="min-w-[240px]">
+          <Button variant="outline" className="min-w-[240px] animate-in">
             <CalendarIcon className="mr-2 h-4 w-4" />
             {isToday(date) ? "Today" : format(date, "PPP")}
           </Button>
@@ -221,8 +376,9 @@ export default function DailyCheckIn({ loop }: DailyCheckInProps) {
         </PopoverContent>
       </Popover>
 
-      <div className="flex items-center gap-4 mt-6">
+      <div className="flex items-center gap-4 mt-6 animate-in">
         <Button
+          ref={missedButtonRef}
           size="lg"
           variant="outline"
           className="border-2 hover:bg-red-50"
@@ -234,11 +390,9 @@ export default function DailyCheckIn({ loop }: DailyCheckInProps) {
         </Button>
 
         <Button
+          ref={completedButtonRef}
           size="lg"
-          className={cn(
-            "bg-gradient-to-r from-flame-500 to-flame-600 hover:from-flame-600 hover:to-flame-700",
-            todayCheckIn?.completed && "animate-celebration"
-          )}
+          className="bg-gradient-to-r from-flame-500 to-flame-600 hover:from-flame-600 hover:to-flame-700 shadow-md"
           onClick={() => handleCheckIn(true)}
           disabled={isSubmitting}
         >
@@ -249,57 +403,34 @@ export default function DailyCheckIn({ loop }: DailyCheckInProps) {
 
       {/* Streak visualization */}
       {loop.currentStreak > 0 && (
-        <div className="mt-6 w-full max-w-sm">
-          <div className="flex justify-between items-center text-sm mb-1">
-            <span>Current streak</span>
-            <div className="flex items-center text-flame-600">
-              <Flame size={14} className="mr-1" />
-              <span>{loop.currentStreak} days</span>
+        <div ref={streakRef} className="mt-8 w-full max-w-xs animate-in">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm font-medium">Current Streak</span>
+            <div className="flex items-center">
+              <Flame size={14} className="text-flame-500 mr-1" />
+              <span className="text-flame-600 font-bold">
+                {loop.currentStreak} days
+              </span>
             </div>
           </div>
-          <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+
+          <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-flame-500 to-orange-500"
+              className="h-full bg-gradient-to-r from-flame-400 to-flame-600 rounded-full"
               style={{
                 width: `${Math.min(100, (loop.currentStreak / 100) * 100)}%`,
+                transition: "width 1s ease-out",
               }}
             />
           </div>
-        </div>
-      )}
 
-      <div className="mt-4 text-sm">
-        {todayCheckIn ? (
-          todayCheckIn.completed ? (
-            <div className="text-flame-600 font-medium flex items-center gap-1 bg-flame-50 px-3 py-1.5 rounded-full">
-              <CheckIcon size={16} />
-              <span>Checked in for {format(date, "MMM d")}</span>
-            </div>
-          ) : (
-            <div className="text-muted-foreground flex items-center gap-1 bg-gray-50 px-3 py-1.5 rounded-full">
-              <XIcon size={16} />
-              <span>Marked as missed for {format(date, "MMM d")}</span>
-            </div>
-          )
-        ) : isToday(date) ? (
-          <span>You haven't checked in for today yet</span>
-        ) : (
-          <span>No check-in recorded for this date</span>
-        )}
-      </div>
-
-      {/* Show achievement image for milestones */}
-      {loop.currentStreak >= 7 && (
-        <div className="mt-6 w-24 h-24 flex items-center justify-center">
-          <img
-            src={
-              loop.currentStreak >= 30
-                ? "/images/unlock-achievements.svg"
-                : "/images/streak-fire.svg"
-            }
-            alt="Achievement"
-            className="w-full h-full object-contain"
-          />
+          <div className="flex justify-between mt-1 text-xs text-muted-foreground">
+            <span>0</span>
+            <span>30</span>
+            <span>60</span>
+            <span>90</span>
+            <span>100+</span>
+          </div>
         </div>
       )}
     </div>

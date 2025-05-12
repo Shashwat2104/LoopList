@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Loop, CheckIn } from "@/types";
 import {
   Calendar as CalendarIcon,
@@ -20,6 +20,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 interface StreakCalendarProps {
   loop: Loop;
@@ -28,29 +30,126 @@ interface StreakCalendarProps {
 
 export default function StreakCalendar({
   loop,
-  checkIns,
+  checkIns = [],
 }: StreakCalendarProps) {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [animate, setAnimate] = useState(false);
   const [direction, setDirection] = useState(0);
 
+  const calendarRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
+  const dayRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // GSAP animations for the calendar
+  useGSAP(() => {
+    if (!calendarRef.current) return;
+
+    // Initial animation for the calendar
+    gsap.from(calendarRef.current, {
+      y: 30,
+      opacity: 0,
+      duration: 0.8,
+      ease: "back.out(1.7)",
+    });
+
+    // Animate stats counters
+    if (statsRef.current) {
+      const statElements = statsRef.current.querySelectorAll(".stat-value");
+      gsap.from(statElements, {
+        textContent: 0,
+        duration: 1.5,
+        ease: "power1.inOut",
+        snap: { textContent: 1 },
+        stagger: 0.2,
+        onUpdate: function () {
+          this.targets().forEach((target: HTMLElement) => {
+            if (target.classList.contains("percent")) {
+              target.textContent =
+                Math.round(parseFloat(target.textContent || "0")) + "%";
+            }
+          });
+        },
+      });
+    }
+
+    // Animate the flame effect for streak days
+    dayRefs.current.forEach((dayRef, index) => {
+      if (dayRef && dayRef.classList.contains("streak-day")) {
+        // Create flame effect
+        gsap.to(dayRef, {
+          boxShadow: "0 0 15px rgba(255, 107, 53, 0.7)",
+          repeat: -1,
+          yoyo: true,
+          duration: 1 + (index % 3) * 0.2,
+          ease: "sine.inOut",
+        });
+      }
+    });
+  }, [currentMonth, checkIns]);
+
+  // Animation for month change
+  const animateMonthChange = (newMonth: Date) => {
+    if (!calendarRef.current) return;
+
+    const timeline = gsap.timeline();
+
+    // Fade out
+    timeline.to(".calendar-grid", {
+      opacity: 0,
+      x: direction > 0 ? -30 : 30,
+      duration: 0.3,
+      ease: "power1.inOut",
+      onComplete: () => {
+        setCurrentMonth(newMonth);
+      },
+    });
+
+    // Fade in
+    timeline.to(".calendar-grid", {
+      opacity: 1,
+      x: 0,
+      duration: 0.3,
+      ease: "power1.out",
+      delay: 0.1,
+    });
+
+    // Animate new stats
+    timeline.add(() => {
+      if (statsRef.current) {
+        const statElements = statsRef.current.querySelectorAll(".stat-value");
+        gsap.from(statElements, {
+          textContent: 0,
+          duration: 1,
+          ease: "power1.inOut",
+          snap: { textContent: 1 },
+          stagger: 0.1,
+          onUpdate: function () {
+            this.targets().forEach((target: HTMLElement) => {
+              if (target.classList.contains("percent")) {
+                target.textContent =
+                  Math.round(parseFloat(target.textContent || "0")) + "%";
+              }
+            });
+          },
+        });
+      }
+    });
+  };
+
   const goToPreviousMonth = () => {
     setDirection(-1);
-    setAnimate(true);
-    setTimeout(() => {
-      setCurrentMonth(subMonths(currentMonth, 1));
-      setAnimate(false);
-    }, 200);
+    animateMonthChange(subMonths(currentMonth, 1));
   };
 
   const goToNextMonth = () => {
     setDirection(1);
-    setAnimate(true);
-    setTimeout(() => {
-      setCurrentMonth(addMonths(currentMonth, 1));
-      setAnimate(false);
-    }, 200);
+    animateMonthChange(addMonths(currentMonth, 1));
   };
+
+  // Reset refs when month changes
+  useEffect(() => {
+    dayRefs.current = [];
+  }, [currentMonth]);
 
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(currentMonth);
@@ -58,12 +157,9 @@ export default function StreakCalendar({
 
   // Calculate day stats
   const totalDaysInMonth = daysInMonth.length;
-  const completedDaysInMonth =
-    checkIns && checkIns.filter
-      ? checkIns.filter(
-          (ci) => ci.completed && isSameMonth(new Date(ci.date), currentMonth)
-        ).length
-      : 0;
+  const completedDaysInMonth = checkIns.filter(
+    (ci) => ci.completed && isSameMonth(new Date(ci.date), currentMonth)
+  ).length;
   const completionRate =
     totalDaysInMonth > 0
       ? Math.round((completedDaysInMonth / totalDaysInMonth) * 100)
@@ -73,8 +169,6 @@ export default function StreakCalendar({
   const getMonthlyStreak = () => {
     let currentStreak = 0;
     let maxStreak = 0;
-
-    if (!checkIns || !checkIns.filter) return maxStreak;
 
     // Sort days in ascending order
     const sortedCheckIns = [...checkIns]
@@ -95,8 +189,58 @@ export default function StreakCalendar({
 
   const monthlyStreak = getMonthlyStreak();
 
+  // Helper to determine if a day is part of a streak
+  const isPartOfStreak = (day: Date) => {
+    if (!checkIns) return false;
+
+    const dayCheckIn = checkIns.find((ci) => isSameDay(new Date(ci.date), day));
+
+    if (!dayCheckIn?.completed) return false;
+
+    // Check for consecutive completed days
+    let streakCount = 1;
+    let currentDate = new Date(day);
+
+    // Check previous days
+    for (let i = 1; i <= 6; i++) {
+      const prevDate = new Date(currentDate);
+      prevDate.setDate(prevDate.getDate() - i);
+
+      const prevCheckIn = checkIns.find((ci) =>
+        isSameDay(new Date(ci.date), prevDate)
+      );
+
+      if (prevCheckIn?.completed) {
+        streakCount++;
+      } else {
+        break;
+      }
+    }
+
+    // Check following days
+    for (let i = 1; i <= 6; i++) {
+      const nextDate = new Date(currentDate);
+      nextDate.setDate(nextDate.getDate() + i);
+
+      const nextCheckIn = checkIns.find((ci) =>
+        isSameDay(new Date(ci.date), nextDate)
+      );
+
+      if (nextCheckIn?.completed) {
+        streakCount++;
+      } else {
+        break;
+      }
+    }
+
+    return streakCount >= 3;
+  };
+
   return (
-    <div className="streak-calendar bg-white rounded-lg p-4 border">
+    <div
+      ref={calendarRef}
+      className="streak-calendar bg-white rounded-lg p-4 border"
+    >
       <div className="flex justify-between items-center mb-4">
         <div>
           <h3 className="text-xl font-semibold">Streak Calendar</h3>
@@ -118,10 +262,10 @@ export default function StreakCalendar({
         </div>
       </div>
 
-      <div className="mb-4 p-3 bg-gray-50 rounded-lg">
+      <div ref={statsRef} className="mb-4 p-3 bg-gray-50 rounded-lg">
         <div className="grid grid-cols-3 gap-4 text-center">
           <div className="flex flex-col">
-            <span className="text-2xl font-bold text-flame-500">
+            <span className="stat-value text-2xl font-bold text-flame-500">
               {completedDaysInMonth}
             </span>
             <span className="text-xs text-muted-foreground">
@@ -129,7 +273,7 @@ export default function StreakCalendar({
             </span>
           </div>
           <div className="flex flex-col">
-            <span className="text-2xl font-bold text-blue-500">
+            <span className="stat-value text-2xl font-bold text-blue-500">
               {monthlyStreak}
             </span>
             <span className="text-xs text-muted-foreground">
@@ -137,7 +281,7 @@ export default function StreakCalendar({
             </span>
           </div>
           <div className="flex flex-col">
-            <span className="text-2xl font-bold text-emerald-500">
+            <span className="stat-value percent text-2xl font-bold text-emerald-500">
               {completionRate}%
             </span>
             <span className="text-xs text-muted-foreground">
@@ -155,136 +299,56 @@ export default function StreakCalendar({
         ))}
       </div>
 
-      <AnimatePresence initial={false} mode="wait">
-        <motion.div
-          key={currentMonth.toString()}
-          initial={{
-            x: direction > 0 ? "100%" : "-100%",
-            opacity: 0,
-          }}
-          animate={{
-            x: 0,
-            opacity: 1,
-          }}
-          exit={{
-            x: direction > 0 ? "-100%" : "100%",
-            opacity: 0,
-          }}
-          transition={{ duration: 0.2 }}
-          className="grid grid-cols-7 gap-1"
-        >
-          {Array.from({ length: new Date(monthStart).getDay() }).map((_, i) => (
-            <div key={`empty-start-${i}`} className="h-10 rounded-md"></div>
-          ))}
+      <div className="calendar-grid grid grid-cols-7 gap-1">
+        {Array.from({ length: new Date(monthStart).getDay() }).map((_, i) => (
+          <div key={`empty-start-${i}`} className="h-10 rounded-md"></div>
+        ))}
 
-          {daysInMonth.map((day, i) => {
-            // Find if there's a check-in for this day
-            const checkIn =
-              checkIns && checkIns.find
-                ? checkIns.find((ci) => isSameDay(new Date(ci.date), day))
-                : undefined;
+        {daysInMonth.map((day, i) => {
+          // Find if there's a check-in for this day
+          const checkIn = checkIns.find((ci) =>
+            isSameDay(new Date(ci.date), day)
+          );
 
-            // Check for streak (3 or more consecutive completed days)
-            const isPartOfStreak = (index: number) => {
-              if (!checkIn?.completed) return false;
-              if (!checkIns || !checkIns.find) return false;
+          const dayHasStreak = isPartOfStreak(day);
 
-              // Check previous days
-              let streakCount = 1;
-              let prevIndex = index - 1;
-              while (prevIndex >= 0) {
-                const prevDay = daysInMonth[prevIndex];
-                const prevCheckIn = checkIns.find((ci) =>
-                  isSameDay(new Date(ci.date), prevDay)
-                );
-                if (prevCheckIn?.completed) {
-                  streakCount++;
-                  prevIndex--;
-                } else {
-                  break;
-                }
-              }
-
-              // Check following days
-              let nextIndex = index + 1;
-              while (nextIndex < daysInMonth.length) {
-                const nextDay = daysInMonth[nextIndex];
-                const nextCheckIn = checkIns.find((ci) =>
-                  isSameDay(new Date(ci.date), nextDay)
-                );
-                if (nextCheckIn?.completed) {
-                  streakCount++;
-                  nextIndex++;
-                } else {
-                  break;
-                }
-              }
-
-              return streakCount >= 3;
-            };
-
-            const dayHasStreak = isPartOfStreak(i);
-
-            return (
-              <motion.div
-                key={day.toString()}
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: i * 0.01 }}
+          return (
+            <div
+              key={day.toString()}
+              ref={(el) => (dayRefs.current[i] = el)}
+              className={cn(
+                "h-10 rounded-md flex items-center justify-center relative",
+                isToday(day) && "border-2 border-flame-300",
+                checkIn?.completed &&
+                  dayHasStreak &&
+                  "streak-day bg-gradient-to-b from-flame-400 to-flame-500 text-white",
+                checkIn?.completed &&
+                  !dayHasStreak &&
+                  "bg-flame-100 text-flame-700",
+                checkIn &&
+                  !checkIn.completed &&
+                  "bg-gray-100 text-gray-400 line-through",
+                !checkIn && "hover:bg-gray-50"
+              )}
+            >
+              <span
                 className={cn(
-                  "h-10 rounded-md flex items-center justify-center relative",
-                  isToday(day) && "border-2 border-flame-300",
-                  checkIn?.completed &&
-                    (dayHasStreak
-                      ? "bg-gradient-to-b from-flame-400 to-flame-500 text-white"
-                      : "bg-flame-100 text-flame-700"),
-                  checkIn &&
-                    !checkIn.completed &&
-                    "bg-gray-100 text-gray-400 line-through",
-                  !checkIn && "hover:bg-gray-50"
+                  "text-sm",
+                  isToday(day) && !checkIn && "font-bold"
                 )}
               >
-                <span
-                  className={cn(
-                    "text-sm",
-                    isToday(day) && !checkIn && "font-bold"
-                  )}
-                >
-                  {format(day, "d")}
-                </span>
+                {format(day, "d")}
+              </span>
 
-                {checkIn?.completed && dayHasStreak && (
-                  <div className="absolute -top-1 -right-1">
-                    <Flame className="h-3 w-3 text-amber-400" />
-                  </div>
-                )}
-              </motion.div>
-            );
-          })}
-
-          {Array.from({ length: 6 - new Date(monthEnd).getDay() }).map(
-            (_, i) => (
-              <div key={`empty-end-${i}`} className="h-10 rounded-md"></div>
-            )
-          )}
-        </motion.div>
-      </AnimatePresence>
-
-      <div className="mt-4 flex justify-between items-center text-xs text-muted-foreground border-t pt-3">
-        <div className="flex space-x-4">
-          <div className="flex items-center">
-            <div className="h-3 w-3 bg-flame-400 rounded-sm mr-2"></div>
-            <span>Completed</span>
-          </div>
-          <div className="flex items-center">
-            <div className="h-3 w-3 bg-gray-100 rounded-sm mr-2"></div>
-            <span>Missed</span>
-          </div>
-        </div>
-        <div className="flex items-center">
-          <Flame className="h-3 w-3 text-amber-400 mr-1" />
-          <span>Streak</span>
-        </div>
+              {/* Flame icon for streak days */}
+              {checkIn?.completed && dayHasStreak && (
+                <div className="absolute -top-1 -right-1 text-yellow-400">
+                  <Flame size={12} />
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
