@@ -14,7 +14,7 @@
 
 ## 📝 Description
 
-<img align="right" width="200" src="https://i.imgur.com/rAoFH7t.png" alt="Habit tracker illustration" />
+<img align="right" width="200" src="https://images.unsplash.com/photo-1605369572399-05d8d64a0f6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Habit tracker illustration" />
 
 LoopList is a modern habit tracking application that helps users build micro-habits with visual streak tracking, public accountability, and a supportive community. Perfect for anyone looking to build consistent habits and improve their daily routines.
 
@@ -156,7 +156,7 @@ yarn dev
 
 ## 👥 Contributing
 
-<img align="right" width="150" src="https://i.imgur.com/7JILMMR.png" alt="Contributing illustration" />
+<img align="right" width="150" src="https://images.unsplash.com/photo-1528901166007-3784c7dd3653?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="Contributing illustration" />
 
 Contributions are always welcome! Please follow these steps:
 
