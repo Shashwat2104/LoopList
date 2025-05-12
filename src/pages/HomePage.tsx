@@ -1,10 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import HeroSection from "@/components/home/hero-section";
 import FeaturesSection from "@/components/home/features-section";
 import StatsSection from "@/components/home/stats-section";
 import CommunitySection from "@/components/home/community-section";
 
 const HomePage: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen">
       <HeroSection />
@@ -22,12 +25,12 @@ const HomePage: React.FC = () => {
             Join thousands of users who are building micro-habits and improving
             their lives with LoopList's streak tracking and community features.
           </p>
-          <a
-            href="#get-started"
+          <button
+            onClick={() => navigate("/login")}
             className="inline-flex items-center justify-center px-8 py-3 bg-white text-flame-600 font-medium rounded-lg shadow-md hover:shadow-lg transition-all"
           >
             Get Started For Free
-          </a>
+          </button>
         </div>
       </section>
 
@@ -55,28 +58,28 @@ const HomePage: React.FC = () => {
                 <h3 className="text-white font-semibold mb-4">Product</h3>
                 <ul className="space-y-2">
                   <li>
-                    <a
-                      href="#features"
+                    <button
+                      onClick={() => navigate("/")}
                       className="hover:text-white transition-colors"
                     >
                       Features
-                    </a>
+                    </button>
                   </li>
                   <li>
-                    <a
-                      href="#pricing"
+                    <button
+                      onClick={() => navigate("/login")}
                       className="hover:text-white transition-colors"
                     >
-                      Pricing
-                    </a>
+                      Get Started
+                    </button>
                   </li>
                   <li>
-                    <a
-                      href="#faq"
+                    <button
+                      onClick={() => navigate("/explore")}
                       className="hover:text-white transition-colors"
                     >
-                      FAQ
-                    </a>
+                      Explore
+                    </button>
                   </li>
                 </ul>
               </div>
@@ -85,50 +88,34 @@ const HomePage: React.FC = () => {
                 <h3 className="text-white font-semibold mb-4">Community</h3>
                 <ul className="space-y-2">
                   <li>
-                    <a
-                      href="#blog"
+                    <button
+                      onClick={() => navigate("/explore")}
                       className="hover:text-white transition-colors"
                     >
-                      Blog
-                    </a>
+                      Public Loops
+                    </button>
                   </li>
                   <li>
-                    <a
-                      href="#forum"
+                    <button
+                      onClick={() => navigate("/login")}
                       className="hover:text-white transition-colors"
                     >
-                      Forum
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#support"
-                      className="hover:text-white transition-colors"
-                    >
-                      Support
-                    </a>
+                      Login / Signup
+                    </button>
                   </li>
                 </ul>
               </div>
 
               <div>
-                <h3 className="text-white font-semibold mb-4">Legal</h3>
+                <h3 className="text-white font-semibold mb-4">About</h3>
                 <ul className="space-y-2">
                   <li>
-                    <a
-                      href="#privacy"
+                    <button
+                      onClick={() => navigate("/")}
                       className="hover:text-white transition-colors"
                     >
-                      Privacy
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#terms"
-                      className="hover:text-white transition-colors"
-                    >
-                      Terms
-                    </a>
+                      Home
+                    </button>
                   </li>
                 </ul>
               </div>
@@ -141,21 +128,12 @@ const HomePage: React.FC = () => {
             </div>
 
             <div className="flex space-x-4">
-              <a href="#twitter" className="hover:text-white transition-colors">
-                Twitter
-              </a>
-              <a
-                href="#instagram"
-                className="hover:text-white transition-colors"
-              >
-                Instagram
-              </a>
-              <a
-                href="#facebook"
-                className="hover:text-white transition-colors"
-              >
-                Facebook
-              </a>
+              <button className="hover:text-white transition-colors">
+                Terms
+              </button>
+              <button className="hover:text-white transition-colors">
+                Privacy
+              </button>
             </div>
           </div>
         </div>

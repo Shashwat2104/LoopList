@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import FeatureCard from "../ui/feature-card";
+import { useNavigate } from "react-router-dom";
 
 const FEATURES = [
   {
@@ -42,6 +43,8 @@ const FEATURES = [
 ];
 
 export const FeaturesSection: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -78,12 +81,12 @@ export const FeaturesSection: React.FC = () => {
           transition={{ duration: 0.5, delay: 0.8, ease: "easeOut" }}
           className="mt-16 text-center"
         >
-          <a
-            href="#get-started"
+          <button
+            onClick={() => navigate("/login")}
             className="inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-flame-500 to-flame-600 text-white font-medium rounded-lg text-lg hover:from-flame-600 hover:to-flame-700 focus:ring-4 focus:ring-flame-400 transition-all"
           >
             Start Building Habits Today
-          </a>
+          </button>
         </motion.div>
       </div>
     </section>

@@ -1,7 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export const HeroSection: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="relative py-20 overflow-hidden bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-4">
@@ -26,22 +29,22 @@ export const HeroSection: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <motion.a
-                href="#get-started"
+              <motion.button
+                onClick={() => navigate("/login")}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
                 className="inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-flame-500 to-flame-600 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all"
               >
                 Start For Free
-              </motion.a>
-              <motion.a
-                href="#learn-more"
+              </motion.button>
+              <motion.button
+                onClick={() => navigate("/explore")}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
                 className="inline-flex items-center justify-center px-8 py-3 bg-white text-flame-600 border border-flame-200 font-medium rounded-lg shadow-sm hover:shadow-md transition-all"
               >
                 Learn More
-              </motion.a>
+              </motion.button>
             </div>
 
             <div className="mt-12 flex items-center">
