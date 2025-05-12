@@ -55,7 +55,7 @@ export const HeroSection: React.FC = () => {
                 Start For Free
               </motion.button>
               <motion.button
-                onClick={() => navigate("/explore")}
+                onClick={() => navigate("/")}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
                 className="inline-flex items-center justify-center px-8 py-3 bg-white text-flame-600 border border-flame-200 font-medium rounded-lg shadow-sm hover:shadow-md transition-all"
