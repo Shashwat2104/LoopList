@@ -12,13 +12,16 @@ LoopList is a modern habit tracking application that helps users build micro-hab
 
 ## ✨ Features
 
-- 🔄 **Create Custom Loops** - Build micro-habits with custom frequencies and track your progress daily
-- 🔥 **Streak Tracking** - Watch your streaks grow as you check in daily, with visual heatmap tracking
-- 👥 **Social Accountability** - Make your loops public and connect with others for motivation
-- 👏 **Community Support** - Cheer on others' progress and get encouragement for your own journey
-- 📊 **Visual Progress** - See your habits grow over time with intuitive visualizations
-- 🔔 **Reminders** - Stay on track with customizable notifications
-- 🌓 **Dark/Light Mode** - Choose the theme that works best for you
+- 🔄 **Create Custom Loops** - Create recurring micro-habits with titles, frequency options, and emoji icons
+- 🔥 **Streak Tracking** - Check in daily to build streaks with visual heatmap calendar
+- 👥 **Social Accountability** - Make loops public for others to see and engage with
+- 👏 **Community Support** - Cheer on others' loops and get encouragement for your habits
+- 📈 **Progress Metrics** - View your current streak, longest streak, and completion rate
+- 🔍 **Explore Trending Loops** - Browse popular loops with filters for most cloned and top streaks
+- 📋 **Loop Dashboard** - Manage all your active loops in one centralized dashboard
+- 🔄 **Clone & Remix** - Add others' loops to your dashboard with one click
+- 📱 **Mobile-Friendly Design** - Enjoy a responsive interface optimized for all devices
+- 🎨 **Animated UI Elements** - Experience smooth GSAP animations throughout the app
 
 ## 🖼️ Screenshots
 
