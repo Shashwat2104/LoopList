@@ -1,0 +1,24 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Main circle representing the "small" micro-habit -->
+  <circle cx="24" cy="24" r="8" fill="#FF6B35"/>
+  
+  <!-- Orbital rings showing progress/consistency -->
+  <circle cx="24" cy="24" r="16" stroke="#FF8A5B" stroke-width="1.5" stroke-dasharray="2 3"/>
+  <circle cx="24" cy="24" r="12" stroke="#FF8A5B" stroke-width="1.5" stroke-dasharray="2 2"/>
+  
+  <!-- Small planets/habits orbiting -->
+  <circle cx="24" cy="8" r="4" fill="#FFD4C2"/>
+  <circle cx="24" cy="40" r="4" fill="#FFD4C2"/>
+  <circle cx="8" cy="24" r="4" fill="#FFD4C2"/>
+  <circle cx="40" cy="24" r="4" fill="#FFD4C2"/>
+  
+  <!-- Small elements inside the planets -->
+  <path d="M23 7H25V9H23V7Z" fill="#FF6B35"/>
+  <path d="M23 39H25V41H23V39Z" fill="#FF6B35"/>
+  <path d="M7 23H9V25H7V23Z" fill="#FF6B35"/>
+  <path d="M39 23H41V25H39V23Z" fill="#FF6B35"/>
+  
+  <!-- Center details -->
+  <circle cx="24" cy="24" r="5" fill="#FF8A5B"/>
+  <circle cx="24" cy="24" r="2" fill="#FFFFFF"/>
+</svg> 

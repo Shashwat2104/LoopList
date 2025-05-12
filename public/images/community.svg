@@ -1,0 +1,64 @@
+<svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="300" height="200" rx="10" fill="#F8F9FA"/>
+  
+  <!-- Main Community Circle -->
+  <circle cx="150" cy="100" r="60" fill="#FFD4C2" opacity="0.6"/>
+  
+  <!-- Community Members -->
+  <!-- Center Person -->
+  <circle cx="150" cy="100" r="20" fill="#FF6B35"/>
+  <circle cx="150" cy="90" r="6" fill="#FFFFFF"/>
+  <path d="M140 110C140 110 145 115 150 115C155 115 160 110 160 110" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Person Top Left -->
+  <circle cx="100" cy="70" r="15" fill="#FF8A5B"/>
+  <circle cx="100" cy="63" r="4" fill="#FFFFFF"/>
+  <path d="M95 75C95 75 98 78 100 78C103 78 106 75 106 75" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
+  
+  <!-- Person Top Right -->
+  <circle cx="200" cy="70" r="15" fill="#FF8A5B"/>
+  <circle cx="200" cy="63" r="4" fill="#FFFFFF"/>
+  <path d="M195 75C195 75 198 78 200 78C203 78 206 75 206 75" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
+  
+  <!-- Person Bottom Left -->
+  <circle cx="100" cy="130" r="15" fill="#FF8A5B"/>
+  <circle cx="100" cy="123" r="4" fill="#FFFFFF"/>
+  <path d="M95 135C95 135 98 138 100 138C103 138 106 135 106 135" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
+  
+  <!-- Person Bottom Right -->
+  <circle cx="200" cy="130" r="15" fill="#FF8A5B"/>
+  <circle cx="200" cy="123" r="4" fill="#FFFFFF"/>
+  <path d="M195 135C195 135 198 138 200 138C203 138 206 135 206 135" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
+  
+  <!-- Connection Lines -->
+  <line x1="120" y1="80" x2="140" y2="90" stroke="#FF6B35" stroke-width="2" stroke-dasharray="3 2"/>
+  <line x1="180" y1="90" x2="190" y2="80" stroke="#FF6B35" stroke-width="2" stroke-dasharray="3 2"/>
+  <line x1="140" y1="110" x2="110" y2="120" stroke="#FF6B35" stroke-width="2" stroke-dasharray="3 2"/>
+  <line x1="160" y1="110" x2="190" y2="120" stroke="#FF6B35" stroke-width="2" stroke-dasharray="3 2"/>
+  
+  <!-- Connection Arcs -->
+  <path d="M100 85C110 100 120 105 150 105" stroke="#FF6B35" stroke-width="2" stroke-dasharray="3 2" fill="none"/>
+  <path d="M150 105C180 105 190 100 200 85" stroke="#FF6B35" stroke-width="2" stroke-dasharray="3 2" fill="none"/>
+  
+  <!-- Speech Bubbles -->
+  <path d="M70 60C70 55 75 50 80 50H95C100 50 105 55 105 60V65C105 70 100 75 95 75H85L80 80V75H80C75 75 70 70 70 65V60Z" fill="white" stroke="#FF6B35" stroke-width="1.5"/>
+  <text x="87" y="67" font-family="Arial" font-size="8" fill="#FF6B35" text-anchor="middle">Great job!</text>
+  
+  <path d="M195 50C200 50 205 55 205 60V65C205 70 200 75 195 75H180L175 80V75H175C170 75 165 70 165 65V60C165 55 170 50 175 50H195Z" fill="white" stroke="#FF6B35" stroke-width="1.5"/>
+  <text x="185" y="67" font-family="Arial" font-size="7" fill="#FF6B35" text-anchor="middle">Keep it up!</text>
+  
+  <path d="M230 130C235 130 240 125 240 120V110C240 105 235 100 230 100H215L210 95V100H210C205 100 200 105 200 110V120C200 125 205 130 210 130H230Z" fill="white" stroke="#FF6B35" stroke-width="1.5"/>
+  <text x="220" y="112" font-family="Arial" font-size="6" fill="#FF6B35" text-anchor="middle">I'm on day 5</text>
+  <text x="220" y="122" font-family="Arial" font-size="6" fill="#FF6B35" text-anchor="middle">of my streak!</text>
+  
+  <!-- Fire Icons -->
+  <path d="M150 140C150 140 155 150 155 155C155 160 150 163 145 163C140 163 135 160 135 155C135 150 140 140 150 140Z" fill="#FF6B35" transform="scale(0.6) translate(116, 100)"/>
+  <path d="M150 140C150 140 145 150 145 155C145 160 150 163 155 163C160 163 165 160 165 155C165 150 160 140 150 140Z" fill="#FF8A5B" transform="scale(0.6) translate(116, 100)"/>
+  
+  <path d="M150 140C150 140 155 150 155 155C155 160 150 163 145 163C140 163 135 160 135 155C135 150 140 140 150 140Z" fill="#FF6B35" transform="scale(0.5) translate(80, 60)"/>
+  <path d="M150 140C150 140 145 150 145 155C145 160 150 163 155 163C160 163 165 160 165 155C165 150 160 140 150 140Z" fill="#FF8A5B" transform="scale(0.5) translate(80, 60)"/>
+  
+  <path d="M150 140C150 140 155 150 155 155C155 160 150 163 145 163C140 163 135 160 135 155C135 150 140 140 150 140Z" fill="#FF6B35" transform="scale(0.4) translate(330, 250)"/>
+  <path d="M150 140C150 140 145 150 145 155C145 160 150 163 155 163C160 163 165 160 165 155C165 150 160 140 150 140Z" fill="#FF8A5B" transform="scale(0.4) translate(330, 250)"/>
+</svg> 

@@ -1,0 +1,18 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Circle background with checkmark -->
+  <circle cx="24" cy="24" r="18" fill="#4CAF50" />
+  <circle cx="24" cy="24" r="15" fill="#5fd665" />
+  <path d="M16 24L22 30L33 19" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Small sparkles around -->
+  <circle cx="10" cy="24" r="2" fill="#FF6B35" />
+  <circle cx="38" cy="24" r="2" fill="#FF6B35" />
+  <circle cx="24" cy="10" r="2" fill="#FF6B35" />
+  <circle cx="24" cy="38" r="2" fill="#FF6B35" />
+  
+  <!-- Tiny decorative elements -->
+  <rect x="13" y="13" width="3" height="3" rx="0.5" transform="rotate(45 13 13)" fill="#FF8A5B"/>
+  <rect x="35" y="35" width="3" height="3" rx="0.5" transform="rotate(45 35 35)" fill="#FF8A5B"/>
+  <rect x="35" y="13" width="3" height="3" rx="0.5" transform="rotate(-45 35 13)" fill="#FF8A5B"/>
+  <rect x="13" y="35" width="3" height="3" rx="0.5" transform="rotate(-45 13 35)" fill="#FF8A5B"/>
+</svg> 

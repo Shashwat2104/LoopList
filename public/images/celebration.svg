@@ -1,0 +1,23 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Trophy -->
+  <path d="M24 8L19 12V20C19 23.866 21.5 27 24 27C26.5 27 29 23.866 29 20V12L24 8Z" fill="#FFD700"/>
+  <path d="M29 14H32C33.1 14 34 14.9 34 16V18C34 20.2 32.2 22 30 22H29V14Z" fill="#FFD700"/>
+  <path d="M19 14H16C14.9 14 14 14.9 14 16V18C14 20.2 15.8 22 18 22H19V14Z" fill="#FFD700"/>
+  <rect x="21" y="27" width="6" height="4" fill="#FFD700"/>
+  <rect x="19" y="31" width="10" height="2" rx="1" fill="#FFD700"/>
+  <rect x="21" y="33" width="6" height="4" fill="#FFD700"/>
+  
+  <!-- Confetti -->
+  <circle cx="10" cy="14" r="2" fill="#FF6B35"/>
+  <circle cx="38" cy="14" r="2" fill="#FF6B35"/>
+  <circle cx="14" cy="32" r="2" fill="#FF6B35"/>
+  <circle cx="34" cy="32" r="2" fill="#FF6B35"/>
+  
+  <rect x="12" y="8" width="3" height="3" rx="0.5" transform="rotate(30 12 8)" fill="#FF8A5B"/>
+  <rect x="36" y="8" width="3" height="3" rx="0.5" transform="rotate(-30 36 8)" fill="#FF8A5B"/>
+  <rect x="8" y="28" width="3" height="3" rx="0.5" transform="rotate(15 8 28)" fill="#FF8A5B"/>
+  <rect x="40" y="28" width="3" height="3" rx="0.5" transform="rotate(-15 40 28)" fill="#FF8A5B"/>
+  
+  <path d="M8 18L10 20L8 22" stroke="#5B8FF9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M40 18L38 20L40 22" stroke="#5B8FF9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg> 

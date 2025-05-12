@@ -1,0 +1,85 @@
+<svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="300" height="200" rx="10" fill="#F8F9FA"/>
+  
+  <!-- Title -->
+  <text x="150" y="25" font-family="Arial" font-size="14" font-weight="bold" fill="#333333" text-anchor="middle">Unlock Achievements</text>
+  
+  <!-- 7-Day Streak Badge -->
+  <circle cx="75" cy="80" r="30" fill="url(#badge1Gradient)"/>
+  <circle cx="75" cy="80" r="25" fill="#FFFFFF"/>
+  <path d="M75 60C75 60 82 75 82 80C82 85 79 90 75 90C71 90 68 85 68 80C68 75 75 60 75 60Z" fill="#FF6B35"/>
+  <text x="75" y="100" font-family="Arial" font-size="8" font-weight="bold" fill="#333333" text-anchor="middle">7 DAY STREAK</text>
+  
+  <!-- 30-Day Streak Badge -->
+  <circle cx="150" cy="80" r="30" fill="url(#badge2Gradient)"/>
+  <circle cx="150" cy="80" r="25" fill="#FFFFFF"/>
+  <path d="M150 65L154 73H163L156 78L159 87L150 82L141 87L144 78L137 73H146L150 65Z" fill="#FFD700"/>
+  <text x="150" y="100" font-family="Arial" font-size="8" font-weight="bold" fill="#333333" text-anchor="middle">30 DAY STREAK</text>
+  
+  <!-- 100-Day Streak Badge -->
+  <circle cx="225" cy="80" r="30" fill="url(#badge3Gradient)"/>
+  <circle cx="225" cy="80" r="25" fill="#FFFFFF"/>
+  <path d="M225 65C225 65 215 75 215 85C215 90 220 95 225 95C230 95 235 90 235 85C235 75 225 65 225 65Z" fill="#FF6B35"/>
+  <circle cx="225" cy="82" r="8" fill="#FFD700"/>
+  <text x="225" y="85" font-family="Arial" font-size="10" font-weight="bold" fill="#FFFFFF" text-anchor="middle">100</text>
+  <text x="225" y="100" font-family="Arial" font-size="8" font-weight="bold" fill="#333333" text-anchor="middle">100 DAY STREAK</text>
+  
+  <!-- Perfect Week Badge -->
+  <circle cx="100" cy="150" r="30" fill="url(#badge4Gradient)"/>
+  <circle cx="100" cy="150" r="25" fill="#FFFFFF"/>
+  <path d="M88 150L95 157L112 140" stroke="#4CAF50" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="100" y="170" font-family="Arial" font-size="8" font-weight="bold" fill="#333333" text-anchor="middle">PERFECT WEEK</text>
+  
+  <!-- Social Butterfly Badge -->
+  <circle cx="200" cy="150" r="30" fill="url(#badge5Gradient)"/>
+  <circle cx="200" cy="150" r="25" fill="#FFFFFF"/>
+  <circle cx="190" cy="145" r="7" fill="#FF8A5B"/>
+  <circle cx="210" cy="145" r="7" fill="#FF8A5B"/>
+  <circle cx="200" cy="155" r="7" fill="#FF8A5B"/>
+  <path d="M190 145L200 155M200 155L210 145" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="200" y="170" font-family="Arial" font-size="8" font-weight="bold" fill="#333333" text-anchor="middle">SOCIAL BUTTERFLY</text>
+  
+  <!-- Sparkles -->
+  <circle cx="60" cy="60" r="2" fill="#FFD700"/>
+  <circle cx="90" cy="65" r="2" fill="#FFD700"/>
+  <circle cx="130" cy="60" r="2" fill="#FFD700"/>
+  <circle cx="170" cy="65" r="2" fill="#FFD700"/>
+  <circle cx="210" cy="60" r="2" fill="#FFD700"/>
+  <circle cx="240" cy="65" r="2" fill="#FFD700"/>
+  <circle cx="85" cy="130" r="2" fill="#FFD700"/>
+  <circle cx="115" cy="135" r="2" fill="#FFD700"/>
+  <circle cx="185" cy="130" r="2" fill="#FFD700"/>
+  <circle cx="215" cy="135" r="2" fill="#FFD700"/>
+  
+  <!-- Confetti -->
+  <rect x="65" y="50" width="4" height="4" rx="1" transform="rotate(30 65 50)" fill="#FF6B35"/>
+  <rect x="145" y="45" width="4" height="4" rx="1" transform="rotate(45 145 45)" fill="#FF6B35"/>
+  <rect x="235" y="50" width="4" height="4" rx="1" transform="rotate(60 235 50)" fill="#FF6B35"/>
+  <rect x="85" y="120" width="4" height="4" rx="1" transform="rotate(30 85 120)" fill="#FF6B35"/>
+  <rect x="195" y="120" width="4" height="4" rx="1" transform="rotate(45 195 120)" fill="#FF6B35"/>
+  
+  <!-- Gradients -->
+  <defs>
+    <linearGradient id="badge1Gradient" x1="75" y1="50" x2="75" y2="110" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF6B35"/>
+      <stop offset="1" stop-color="#FF8A5B"/>
+    </linearGradient>
+    <linearGradient id="badge2Gradient" x1="150" y1="50" x2="150" y2="110" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFD700"/>
+      <stop offset="1" stop-color="#FFA500"/>
+    </linearGradient>
+    <linearGradient id="badge3Gradient" x1="225" y1="50" x2="225" y2="110" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF6B35"/>
+      <stop offset="1" stop-color="#FF8A5B"/>
+    </linearGradient>
+    <linearGradient id="badge4Gradient" x1="100" y1="120" x2="100" y2="180" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4CAF50"/>
+      <stop offset="1" stop-color="#8BC34A"/>
+    </linearGradient>
+    <linearGradient id="badge5Gradient" x1="200" y1="120" x2="200" y2="180" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF6B35"/>
+      <stop offset="1" stop-color="#FF8A5B"/>
+    </linearGradient>
+  </defs>
+</svg> 

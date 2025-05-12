@@ -1,0 +1,100 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 25% 98%;
+    --foreground: 240 10% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 15%;
+
+    --primary: 24 95% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 172 66% 50%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 240 5% 90%;
+    --muted-foreground: 240 4% 45%;
+
+    --accent: 265 89% 66%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 24 95% 53%;
+
+    --radius: 1rem;
+  }
+
+  .dark {
+    --background: 240 10% 8%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 10% 12%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 12%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 24 95% 53%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 172 66% 45%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 5% 20%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 265 89% 66%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5% 26%;
+    --input: 240 5% 26%;
+    --ring: 24 93% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .streak-badge {
+    @apply bg-gradient-to-r from-flame-400 to-flame-600 text-white font-bold rounded-full px-3 py-1 text-sm inline-flex items-center gap-1;
+  }
+  
+  .loop-card {
+    @apply bg-card border rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow;
+  }
+  
+  .heat-0 { @apply bg-muted; }
+  .heat-1 { @apply bg-flame-100; }
+  .heat-2 { @apply bg-flame-200; }
+  .heat-3 { @apply bg-flame-300; }
+  .heat-4 { @apply bg-flame-400; }
+  .heat-5 { @apply bg-flame-500; }
+  
+  .day-marker {
+    @apply w-5 h-5 rounded-sm;
+  }
+}
