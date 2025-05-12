@@ -107,7 +107,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - Website: [looplist.app](https://loop-list-git-main-shashwat2104s-projects.vercel.app/)
 - Email: shashwatmahender2104@gmail.com
-- Linkedin : [@looplistapp](https://www.linkedin.com/in/shashwat-mahendra-214598163/)
+- Linkedin : [Shashwat](https://www.linkedin.com/in/shashwat-mahendra-214598163/)
 
 ---
 
