@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import FeatureCard from "../ui/feature-card";
 import { useNavigate } from "react-router-dom";
+import AnimatedText from "@/components/ui/animated-text";
 
 const FEATURES = [
   {
@@ -54,13 +55,23 @@ export const FeaturesSection: React.FC = () => {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            Features That Make Habit-Building Fun
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            LoopList turns habit tracking into a social, visually rewarding
-            experience that keeps you motivated and accountable.
-          </p>
+          <AnimatedText
+            text="Features That Make Habit-Building Fun"
+            effect="rainbow"
+            duration={1.5}
+            tag="h2"
+            className="text-3xl font-bold text-gray-900 mb-4"
+          />
+
+          <AnimatedText
+            text="LoopList turns habit tracking into a social, visually rewarding experience that keeps you motivated and accountable."
+            effect="typewriter"
+            duration={1.2}
+            delay={0.5}
+            staggerAmount={0.02}
+            tag="p"
+            className="text-xl text-gray-600 max-w-3xl mx-auto"
+          />
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -83,7 +94,7 @@ export const FeaturesSection: React.FC = () => {
         >
           <button
             onClick={() => navigate("/login")}
-            className="inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-flame-500 to-flame-600 text-white font-medium rounded-lg text-lg hover:from-flame-600 hover:to-flame-700 focus:ring-4 focus:ring-flame-400 transition-all"
+            className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-flame-500 to-flame-600 text-white font-medium rounded-lg text-lg hover:from-flame-600 hover:to-flame-700 shadow-md hover:shadow-lg transform hover:-translate-y-1 focus:ring-4 focus:ring-flame-400 transition-all duration-300"
           >
             Start Building Habits Today
           </button>

@@ -4,6 +4,7 @@ import HeroSection from "@/components/home/hero-section";
 import FeaturesSection from "@/components/home/features-section";
 import StatsSection from "@/components/home/stats-section";
 import CommunitySection from "@/components/home/community-section";
+import AnimatedText from "@/components/ui/animated-text";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -18,19 +19,32 @@ const HomePage: React.FC = () => {
       {/* Call to Action Section */}
       <section className="py-20 bg-flame-500 text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6">
-            Ready to Start Building Better Habits?
-          </h2>
-          <p className="text-xl mb-8 max-w-3xl mx-auto">
-            Join thousands of users who are building micro-habits and improving
-            their lives with LoopList's streak tracking and community features.
-          </p>
-          <button
-            onClick={() => navigate("/login")}
-            className="inline-flex items-center justify-center px-8 py-3 bg-white text-flame-600 font-medium rounded-lg shadow-md hover:shadow-lg transition-all"
-          >
-            Get Started For Free
-          </button>
+          <div className="max-w-4xl mx-auto">
+            <AnimatedText
+              text="Ready to Start Building Better Habits?"
+              effect="staggered"
+              duration={1}
+              tag="h2"
+              className="text-4xl font-bold mb-6"
+            />
+
+            <AnimatedText
+              text="Join thousands of users who are building micro-habits and improving their lives with LoopList's streak tracking and community features."
+              effect="fadeIn"
+              duration={1}
+              delay={0.5}
+              staggerAmount={0.01}
+              tag="p"
+              className="text-xl mb-8 mx-auto"
+            />
+
+            <button
+              onClick={() => navigate("/login")}
+              className="inline-flex items-center justify-center px-8 py-4 bg-white text-flame-600 font-medium rounded-lg shadow-md hover:shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-300"
+            >
+              Get Started For Free
+            </button>
+          </div>
         </div>
       </section>
 

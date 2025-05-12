@@ -8,6 +8,7 @@ import { LoopProvider } from "@/context/LoopContext";
 
 import Index from "./pages/Index";
 import AuthPage from "./pages/AuthPage";
+import EnhancedAuthPage from "./pages/EnhancedAuthPage";
 import DashboardPage from "./pages/DashboardPage";
 import ExplorePage from "./pages/ExplorePage";
 import LoopDetailPage from "./pages/LoopDetailPage";
@@ -40,14 +41,7 @@ const AnimatedRoutes = () => {
           </PageTransition>
         }
       />
-      <Route
-        path="/login"
-        element={
-          <PageTransition>
-            <AuthPage />
-          </PageTransition>
-        }
-      />
+      <Route path="/login" element={<EnhancedAuthPage />} />
       <Route
         path="/dashboard"
         element={

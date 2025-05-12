@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import AnimatedText from "@/components/ui/animated-text";
 
 export const HeroSection: React.FC = () => {
   const navigate = useNavigate();
@@ -16,17 +17,33 @@ export const HeroSection: React.FC = () => {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="lg:w-1/2 mb-12 lg:mb-0 lg:pr-10"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Build Better Habits
-              <span className="text-flame-500 block mt-2">
-                One Streak at a Time
-              </span>
-            </h1>
+            <div className="mb-6">
+              <AnimatedText
+                text="Build Better Habits"
+                effect="staggered"
+                duration={1.5}
+                tag="h1"
+                className="text-4xl md:text-5xl font-bold text-gray-900"
+              />
+              <AnimatedText
+                text="One Streak at a Time"
+                effect="slideUp"
+                duration={1.2}
+                delay={0.5}
+                tag="span"
+                className="text-4xl md:text-5xl font-bold text-flame-500 block mt-2"
+              />
+            </div>
 
-            <p className="text-xl text-gray-600 mb-8">
-              LoopList helps you create and maintain micro-habits through visual
-              streaks, public accountability, and a supportive community.
-            </p>
+            <AnimatedText
+              text="LoopList helps you create and maintain micro-habits through visual streaks, public accountability, and a supportive community."
+              effect="fadeIn"
+              duration={1}
+              delay={1.5}
+              staggerAmount={0.01}
+              tag="p"
+              className="text-xl text-gray-600 mb-8"
+            />
 
             <div className="flex flex-col sm:flex-row gap-4">
               <motion.button
