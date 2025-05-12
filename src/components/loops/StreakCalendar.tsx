@@ -58,9 +58,12 @@ export default function StreakCalendar({
 
   // Calculate day stats
   const totalDaysInMonth = daysInMonth.length;
-  const completedDaysInMonth = checkIns.filter(
-    (ci) => ci.completed && isSameMonth(new Date(ci.date), currentMonth)
-  ).length;
+  const completedDaysInMonth =
+    checkIns && checkIns.filter
+      ? checkIns.filter(
+          (ci) => ci.completed && isSameMonth(new Date(ci.date), currentMonth)
+        ).length
+      : 0;
   const completionRate =
     totalDaysInMonth > 0
       ? Math.round((completedDaysInMonth / totalDaysInMonth) * 100)
@@ -70,6 +73,8 @@ export default function StreakCalendar({
   const getMonthlyStreak = () => {
     let currentStreak = 0;
     let maxStreak = 0;
+
+    if (!checkIns || !checkIns.filter) return maxStreak;
 
     // Sort days in ascending order
     const sortedCheckIns = [...checkIns]
@@ -174,13 +179,15 @@ export default function StreakCalendar({
 
           {daysInMonth.map((day, i) => {
             // Find if there's a check-in for this day
-            const checkIn = checkIns.find((ci) =>
-              isSameDay(new Date(ci.date), day)
-            );
+            const checkIn =
+              checkIns && checkIns.find
+                ? checkIns.find((ci) => isSameDay(new Date(ci.date), day))
+                : undefined;
 
             // Check for streak (3 or more consecutive completed days)
             const isPartOfStreak = (index: number) => {
               if (!checkIn?.completed) return false;
+              if (!checkIns || !checkIns.find) return false;
 
               // Check previous days
               let streakCount = 1;

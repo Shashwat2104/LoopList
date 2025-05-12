@@ -20,11 +20,12 @@ import { AnimatedContainer } from "@/components/ui/animated-container";
 
 export default function LoopDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const { getLoopById, cheerLoop, cloneLoop } = useLoops();
+  const { getLoopById, cheerLoop, cloneLoop, getCheckInsForLoop } = useLoops();
   const { user } = useAuth();
   const navigate = useNavigate();
 
   const loop = id ? getLoopById(id) : undefined;
+  const checkIns = id ? getCheckInsForLoop(id) : [];
 
   // Redirect if loop not found
   useEffect(() => {
@@ -202,7 +203,7 @@ export default function LoopDetailPage() {
 
             {/* Streak calendar */}
             <AnimatedContainer variant="fadeInRight" delay="medium">
-              <StreakCalendar loopId={loop.id} />
+              <StreakCalendar loop={loop} checkIns={checkIns} />
             </AnimatedContainer>
           </div>
         </main>

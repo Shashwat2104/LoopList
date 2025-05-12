@@ -489,6 +489,8 @@ export const LoopProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const hasUserCheeredLoop = (loopId: string) => {
+    if (!user) return false;
+
     return userReactions.some(
       (reaction) => reaction.loopId === loopId && reaction.userId === user.id
     );
