@@ -10,11 +10,13 @@
 [![GSAP](https://img.shields.io/badge/GSAP-3.x-orange.svg)](https://greensock.com/gsap/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.x-38B2AC.svg)](https://tailwindcss.com/)
 
+<img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Habit tracking concept" width="80%">
+
 </div>
 
 ## 📝 Description
 
-<img align="right" width="200" src="https://images.unsplash.com/photo-1605369572399-05d8d64a0f6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Habit tracker illustration" />
+<img align="right" width="200" src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Streak calendar visualization" />
 
 LoopList is a modern habit tracking application that helps users build micro-habits with visual streak tracking, public accountability, and a supportive community. Perfect for anyone looking to build consistent habits and improve their daily routines.
 
@@ -32,6 +34,11 @@ LoopList is a modern habit tracking application that helps users build micro-hab
 - 🔄 **Clone & Remix** - Add others' loops to your dashboard with one click
 - 📱 **Mobile-Friendly Design** - Enjoy a responsive interface optimized for all devices
 - 🎨 **Animated UI Elements** - Experience smooth GSAP animations throughout the app
+
+<div align="center">
+  <img src="https://images.unsplash.com/photo-1493612276216-ee3925520721?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Teamwork and accountability" width="80%">
+  <p><em>🤝 Achieve more together with social accountability</em></p>
+</div>
 
 ## 🏆 Habit Ideas to Get Started
 
@@ -58,6 +65,19 @@ LoopList is a modern habit tracking application that helps users build micro-hab
   <img src="public/screenshots/explore.png" alt="Explore Loops" width="80%">
   <p><em>🔍 Discover popular habits from the community</em></p>
 </div>
+
+## 🔄 How LoopList Works
+
+<div align="center">
+  <img src="https://images.unsplash.com/photo-1517971129774-8a2b38fa128e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Progress visualization" width="80%">
+  <p><em>📈 Track your progress and celebrate consistency</em></p>
+</div>
+
+1. **Create Your Loops** - Define micro-habits with custom frequencies and tracking options
+2. **Check In Daily** - Build your streak by marking habits as complete each day
+3. **Share & Connect** - Make loops public for accountability and community support
+4. **Explore & Clone** - Discover trending habits and add them to your dashboard
+5. **Stay Motivated** - Watch your streaks grow and receive community encouragement
 
 ## 🚀 Installation
 
@@ -156,7 +176,7 @@ yarn dev
 
 ## 👥 Contributing
 
-<img align="right" width="150" src="https://images.unsplash.com/photo-1528901166007-3784c7dd3653?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="Contributing illustration" />
+<img align="right" width="150" src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="Team collaboration" />
 
 Contributions are always welcome! Please follow these steps:
 
@@ -182,6 +202,11 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 [![Create](https://img.shields.io/badge/✨-Create_Loop-ff6b35)](https://looplist.app/create)
 [![Profile](https://img.shields.io/badge/👤-My_Profile-ff6b35)](https://looplist.app/profile)
 
+</div>
+
+<div align="center">
+  <img src="https://images.unsplash.com/photo-1530811761207-8d9d22f0a141?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Community celebration" width="80%">
+  <p><em>🎉 Celebrate achievements with the LoopList community</em></p>
 </div>
 
 ## 📞 Contact
