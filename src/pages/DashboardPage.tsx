@@ -13,7 +13,7 @@ import { AnimatedContainer } from "@/components/ui/animated-container";
 import { AnimatedGrid } from "@/components/ui/animated-list";
 
 export default function DashboardPage() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const { getUserLoops } = useLoops();
   const navigate = useNavigate();
   const toast = useToast();
@@ -21,13 +21,23 @@ export default function DashboardPage() {
 
   // Use useEffect for authentication check and redirection
   useEffect(() => {
-    if (!user) {
+    // Only redirect if authentication check is complete (not loading) and user is not logged in
+    if (!isLoading && !user) {
       toast.error("Please login first to access the dashboard.");
       navigate("/login");
     }
-  }, [user, navigate, toast]);
+  }, [user, isLoading, navigate, toast]);
 
-  // Return null during initial render if not authenticated
+  // Return loading state or null during authentication check
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-muted-foreground">Loading...</p>
+      </div>
+    );
+  }
+
+  // Return null if not authenticated
   if (!user) {
     return null;
   }
