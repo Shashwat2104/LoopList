@@ -197,10 +197,10 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 <div align="center">
 
-[![Dashboard](https://img.shields.io/badge/🏠-Dashboard-ff6b35)](https://loop-list-git-main-shashwat2104s-projects.vercel.app/home)
-[![Explore](https://img.shields.io/badge/🔍-Explore_Loops-ff6b35)](https://loop-list-git-main-shashwat2104s-projects.vercel.app/explore)
-[![Create](https://img.shields.io/badge/✨-Create_Loop-ff6b35)](https://loop-list-git-main-shashwat2104s-projects.vercel.app/login)
-[![Profile](https://img.shields.io/badge/👤-My_Profile-ff6b35)](https://loop-list-git-main-shashwat2104s-projects.vercel.app/login)
+[![Dashboard](https://img.shields.io/badge/🏠-Dashboard-ff6b35)](https://loop-list-two.vercel.app/home)
+[![Explore](https://img.shields.io/badge/🔍-Explore_Loops-ff6b35)](https://loop-list-two.vercel.app/explore)
+[![Create](https://img.shields.io/badge/✨-Create_Loop-ff6b35)](https://loop-list-two.vercel.app/login)
+[![Profile](https://img.shields.io/badge/👤-My_Profile-ff6b35)](https://loop-list-two.vercel.app/login)
 
 </div>
 
@@ -211,7 +211,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📞 Contact
 
-- 🌐 Website: [looplist.app]([https://looplist.app](https://loop-list-git-main-shashwat2104s-projects.vercel.app/))
+- 🌐 Website: [looplist.app]([https://loop-list-two.vercel.app/])
 - 📧 Email: shashwatmahender2104@gmail.com
 - 🐦 Twitter: [@looplistapp](https://twitter.com/looplistapp)
 
