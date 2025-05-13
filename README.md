@@ -197,10 +197,10 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 <div align="center">
 
-[![Dashboard](https://img.shields.io/badge/🏠-Dashboard-ff6b35)](https://loop-list-two.vercel.app/home)
-[![Explore](https://img.shields.io/badge/🔍-Explore_Loops-ff6b35)](https://loop-list-two.vercel.app/explore)
-[![Create](https://img.shields.io/badge/✨-Create_Loop-ff6b35)](https://loop-list-two.vercel.app/login)
-[![Profile](https://img.shields.io/badge/👤-My_Profile-ff6b35)](https://loop-list-two.vercel.app/login)
+[![Dashboard](https://img.shields.io/badge/🏠-Dashboard-ff6b35)](https://loop-list-two.vercel.app/)
+[![Explore](https://img.shields.io/badge/🔍-Explore_Loops-ff6b35)](https://loop-list-two.vercel.app/)
+[![Create](https://img.shields.io/badge/✨-Create_Loop-ff6b35)](https://loop-list-two.vercel.app/)
+[![Profile](https://img.shields.io/badge/👤-My_Profile-ff6b35)](https://loop-list-two.vercel.app/)
 
 </div>
 
