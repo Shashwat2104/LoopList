@@ -211,15 +211,15 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📞 Contact
 
-- 🌐 Website: [looplist.app](https://looplist.app)
-- 📧 Email: support@looplist.app
+- 🌐 Website: [looplist.app]([https://looplist.app](https://loop-list-git-main-shashwat2104s-projects.vercel.app/))
+- 📧 Email: shashwatmahender2104@gmail.com
 - 🐦 Twitter: [@looplistapp](https://twitter.com/looplistapp)
 
 ---
 
 <div align="center">
 
-Made with ❤️ and 🔥 by the LoopList Team
+Made with ❤️ and 🔥 by the Shashwat Mahendra
 
 <em>"The best way to predict your future is to create it, one habit at a time."</em>
 
