@@ -211,7 +211,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📞 Contact
 
-- 🌐 Website: [looplist.app]([https://loop-list-two.vercel.app/])
+- 🌐 Website: [looplist.app](https://loop-list-two.vercel.app/)
 - 📧 Email: shashwatmahender2104@gmail.com
 - 🐦 Twitter: [@looplistapp](https://twitter.com/looplistapp)
 
